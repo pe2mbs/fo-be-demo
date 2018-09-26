@@ -25,7 +25,6 @@ export class AppComponent implements  OnInit {
   {
     this.apiService.getContacts().subscribe((data:  Array<object>) => {
       this.contacts  =  data;
-      console.log(data);
     } );
   }
 
