@@ -3,16 +3,21 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { PagerService } from './services/pager.service';
+import { ContactBackendService } from './services/contact-backend.service';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ PagerService,
+               ContactBackendService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

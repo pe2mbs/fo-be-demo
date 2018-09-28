@@ -9,20 +9,25 @@
       <th>Phone</th>
       <th>Email</th>
       <th>Address</th>
+      <th>Operatons</th>
   </tr>
-  <tr *ngFor="let contact of contacts">
+  <tr *ngFor="let contact of pagedItems">
       <td> {{ contact.first_name }} </td>
       <td> {{ contact.last_name }} </td>
       <td> {{ contact.phone }} </td>
       <td> {{ contact.email }} </td>
       <td> {{ contact.address }} </td>
+      <td>
+        <button (click)="delRecord( contact.id )">Del</button>  
+        <button (click)="editRecord( contact.id )">Edit</button>  
+      </td>
   </tr>
   </table> 
+    <app-pagination [pager]="pager"
+                    (goPage)="setPage( $event )">
+
+    </app-pagination>
   <div>
-      <button (click)="getRecords()">Update</button>
       <button (click)="addRecord()">Add</button>
-      <button (click)="delRecord()">Delete</button>
-      <button (click)="editRecord()">Edit</button>      
-      <button (click)="patchRecord()">Patch</button>      
   </div>
 </div>

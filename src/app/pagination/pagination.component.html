@@ -1,0 +1,22 @@
+<div *ngIf="pager?.pages && pager.pages.length" class="pagination">
+    <button class="btn-action"
+            (click)="onFirstPage()"
+            [disabled]="pager.currentPage == 1"
+            [class.btn-enabled]="pager.currentPage != 1">First</button>
+    <button class="btn-action"
+            (click)="onPrev()"
+            [disabled]="pager.currentPage == 1"
+            [class.btn-enabled]="pager.currentPage != 1">Previous</button>
+    <button *ngFor="let page of pager.pages"
+            (click)="onPage( page )"
+            [class.active]="pager.currentPage == page"
+            class="btn-enabled">{{ page }}</button>
+    <button (click)="onNext()"
+            class="btn-action"
+            [disabled]="pager.currentPage == pager.totalPages"
+            [class.btn-enabled]="pager.currentPage != pager.totalPages">Next</button>
+    <button (click)="onLastPage()"
+            [disabled]="pager.currentPage == pager.totalPages"
+            class="btn-action"
+            [class.btn-enabled]="pager.currentPage != pager.totalPages">Last</button>
+</div>   

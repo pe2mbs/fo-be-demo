@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DemoBackendService } from './demo-backend.service';
+import { PagerService } from './pager.service';
 
-describe('DemoBackendService', () => {
+describe('PagerService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: DemoBackendService = TestBed.get(DemoBackendService);
+    const service: PagerService = TestBed.get(PagerService);
     expect(service).toBeTruthy();
   });
 });
