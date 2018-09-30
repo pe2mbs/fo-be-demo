@@ -18,6 +18,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.1.
 
+# Python and Flask development and production server
+See of more information see the README.md file in the python/ folder.
+
 
 ## Development server
 
