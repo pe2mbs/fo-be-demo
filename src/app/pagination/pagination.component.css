@@ -1,23 +1,17 @@
-/*
-button 
-{
-    cursor: pointer;
-}
-*/
-
 .pagination 
 {
     display: inline-block;
     padding-left: 0;
     margin: 20px 0;
     border-radius: 4px;
+    text-align: center;
+    width: 100%;
 }
 
 .pagination>div 
 {
     display: inline;
 }
-
 
 div 
 {
@@ -35,70 +29,20 @@ div
     padding-inline-start: 40px;
 }
 
-* 
-{
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-.pagination>:first-child>button, 
-.pagination>:first-child>span 
-{
-    margin-left: 0;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-}
-
-.pagination>button
-{
-    position: relative;
-    float: left;
-    padding: 6px 12px;
-    margin-left: -1px;
-    line-height: 1.42857143;
-    text-decoration: none;
-}
-
-.pagination>button.btn-action
-{
-    
-    width: 80px;
-} 
-
-.pagination>button.disabled, 
-.pagination>button.disabled:focus, 
-.pagination>button.disabled:hover
-{
-    color: #777;
-    cursor: not-allowed;
-    background-color: #777;
-    border: 1px solid #777;
-}
-
-.pagination>button.btn-enabled, 
-.pagination>button.btn-enabled:focus, 
-.pagination>button.btn-enabled:hover
-{
-    cursor: pointer;
-    color: #337ab7;
-    background-color: #fff;
-    border: 1px solid #ddd;
-}
-
-.pagination>button.active, 
-.pagination>button.active:focus, 
-.pagination>button.active:hover 
-{
-    z-index: 3;
-    color: #fff;
-    cursor: pointer;
-    background-color: #337ab7;
-    border-color: #337ab7;
-}
-
-button:active, button:hover 
+.page-button-active
 {
     outline: 0;
-    
+    color:  #fff;
+    background-color: #3f51b5;
 }
+
+.page-button
+{
+    width: 40px;
+}
+
+.mat-flat-button
+{
+    margin: 0 3px;
+}
+
