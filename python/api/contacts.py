@@ -21,7 +21,7 @@ import json
 from flask import request, abort
 from flask_classy import FlaskView, route
 from flask_cors import cross_origin
-from .pager import getPager
+from api.pager import getPager
 
 
 class ApiContacts( FlaskView ):

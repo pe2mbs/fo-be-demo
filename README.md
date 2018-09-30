@@ -237,3 +237,5 @@ is not 'dist' then this must be used.
 This is optional, this normally derives from the project_dir. When the Angular source folder 
 is not 'src' then this must be used.  
 
+# Angular project
+The Angular project contains a a simple contact's page to demonstrate the pagination component. It can be used for both remote and local data.
