@@ -44,7 +44,6 @@ AngularLoader.register( app )
 # Setup the API's
 ApiContacts.register( app )
 
-
 def usage():
     banner()
     print( """

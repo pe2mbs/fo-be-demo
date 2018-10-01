@@ -55,13 +55,15 @@ def loadSettings( configuration ):
         project_dir     = abspath( data[ 'project_dir' ] )
         angular_path    = abspath( join( project_dir, "dist", basename( project_dir ) ) + "/" )
         source_path     = abspath( join( project_dir, "src", "app" ) )
+        del data['project_dir']
 
     if 'angular_path' in data:
         angular_path    = abspath( data[ 'angular_path' ] ) + "/"
-        pass
+        del data[ 'angular_path' ]
 
     if 'source_path' in data:
         source_path     = abspath( data[ 'source_path' ] )
+        del data['source_path']
 
     return data
 
