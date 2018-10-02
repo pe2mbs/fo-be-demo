@@ -16,3 +16,15 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+table {
+  width: 100%;
+}
+
+button.test
+{
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  margin-right: 5px;
+  padding: 0 10px;
+}

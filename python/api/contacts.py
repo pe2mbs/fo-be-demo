@@ -76,13 +76,13 @@ class ApiContacts( FlaskView ):
 
         elif request.method == 'PATCH':    # Alter field
             idx = self._getIndexById( id, 410 )
-            contacts[ idx ].update( request.json )
+            self.contacts[ idx ].update( request.json )
             record = self.contacts[ idx ]
 
         elif request.method == 'DELETE':    # Delete record
             idx = self._getIndexById( id, 410 )
             record = self.contacts[ idx ]
-            del contacts[ idx ]
+            del self.contacts[ idx ]
 
         else:
             abort( 401 )

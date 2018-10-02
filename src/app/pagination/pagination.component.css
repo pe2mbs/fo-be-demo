@@ -39,6 +39,15 @@ div
 .page-button
 {
     width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    margin-right: 5px;
+    padding: 0 10px;
+}
+
+.pager_button
+{
+    margin-right: 5px;
 }
 
 .mat-flat-button

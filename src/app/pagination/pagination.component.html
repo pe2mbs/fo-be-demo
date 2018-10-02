@@ -1,19 +1,23 @@
 <div *ngIf="pager?.pages && pager.pages.length" class="pagination">
-        <button mat-flat-button 
+        <button mat-raised-button color="primary" 
+                class="pager_button"
                 (click)="onFirstPage()"
                 [disabled]="pager.currentPage == 1">First</button>
-        <button mat-flat-button 
+        <button mat-raised-button color="primary"
+                class="pager_button" 
                 (click)="onPrev()"
                 [disabled]="pager.currentPage == 1">Previous</button>
-        <button mat-icon-button
+        <button mat-raised-button
                 *ngFor="let page of pager.pages"
                 (click)="onPage( page )"
                 class="page-button"
                 [class.page-button-active]="pager.currentPage == page">{{ page }}</button>
         <button (click)="onNext()"
-                mat-flat-button color="primary"
+                class="pager_button"
+                mat-raised-button color="primary"
                 [disabled]="pager.currentPage == pager.totalPages">Next</button>
         <button (click)="onLastPage()"
+                class="pager_button"
                 [disabled]="pager.currentPage == pager.totalPages"
-                mat-flat-button color="primary">Last</button>
+                mat-raised-button color="primary">Last</button>
 </div>

@@ -26,21 +26,25 @@ import { AppComponent } from './app.component';
 import { PagerService } from './services/pager.service';
 import { ContactBackendService } from './services/contact-backend.service';
 import { PaginationComponent } from './pagination/pagination.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { TableSelectionExampleComponent } from './example/table-selection-example/table-selection-example.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PaginationComponent
+    TableSelectionExampleComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule,
+    MatIconModule
   ],
-  providers: [ PagerService,
-               ContactBackendService ],
+  providers: [ ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
