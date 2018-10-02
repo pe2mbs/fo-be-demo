@@ -16,6 +16,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
+import os
 from flask_classy import FlaskView, route
 from flask import send_from_directory
 from werkzeug.routing import BaseConverter
@@ -30,8 +31,17 @@ class RegexConverter( BaseConverter ):
 class AngularLoader( FlaskView ):
     route_base  = '/'
     def index( self ):
-        return send_from_directory( config.angular_path, "index.html" )
+        print( "Angular dist : %s" % ( config.angular_path ) )
+        try:
+            if not os.path.isfile( os.path.join( config.angular_path, "index.html" ) ):
+                print( "Python says file not found" )
+
+            return send_from_directory( config.angular_path, "index.html" )
+        except Exception as exc:
+            print( exc )
+            raise
 
     @route( r"/<regex('\w\.(js|css)'):path>" )
     def angular_src( self, path ):
+        print("Angular dist : %s" % (config.angular_path))
         return send_from_directory( config.angular_path, path )
