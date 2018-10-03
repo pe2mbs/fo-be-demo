@@ -18,6 +18,8 @@
 */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
@@ -28,7 +30,18 @@ import { ContactBackendService } from './services/contact-backend.service';
 import { PaginationComponent } from './pagination/pagination.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TableSelectionExampleComponent } from './example/table-selection-example/table-selection-example.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSortModule } from '@angular/material';
+import { RouterModule, Routes } from '@angular/router';
+import {APP_BASE_HREF} from '@angular/common';
+
+const appRoutes: Routes = [
+  { path: 'example-table', component: TableSelectionExampleComponent },
+  { path: '**', redirectTo: '/' }
+];
 
 @NgModule({
   declarations: [
@@ -36,15 +49,24 @@ import { TableSelectionExampleComponent } from './example/table-selection-exampl
     TableSelectionExampleComponent,
   ],
   imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatToolbarModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
-  providers: [ ],
+  providers: [ { provide: APP_BASE_HREF, useValue : '/' },
+               { provide: LocationStrategy, useClass: HashLocationStrategy } ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

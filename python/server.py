@@ -33,16 +33,6 @@ __author__  = 'Marc Bertens-Nguyen <m.bertens@pe2mbs.nl'
 __license__ = 'GPLv2'
 __date__    = '2018'
 
-app = Flask( __name__, 
-             static_url_path = "",
-             static_folder = angular_path + "/" )
-
-# Setup the Angular application
-app.url_map.converters[ 'regex' ] = RegexConverter
-AngularLoader.register( app )
-
-# Setup the API's
-ApiContacts.register( app )
 
 def usage():
     banner()
@@ -103,18 +93,37 @@ def main():
 
     verbose = (configuration == 'dev')
     settings = loadSettings( configuration )
+    """
     if verbose:
         banner()
         print( "Running ng build." )
-
+    
     if configuration == 'dev':
         system( 'ng build' )
 
     else:
         system( 'ng build --configuration ' + configuration )
-
+    """
     if verbose:
         print( "Starting the web server." )
+
+    app = Flask( __name__, 
+             static_url_path = "",
+             static_folder = settings[ 'angular_path' ] + "/" )
+
+    if 'angular_path' in settings:
+        del settings[ 'angular_path' ]
+    if 'project_dir' in settings:
+        del settings[ 'project_dir' ]
+    if 'source_path' in settings:
+        del settings[ 'source_path' ]
+
+    # Setup the Angular application
+    app.url_map.converters[ 'regex' ] = RegexConverter
+    AngularLoader.register( app )
+
+    # Setup the API's
+    ApiContacts.register( app )
 
     if settings[ 'debug' ]:
         CORS( app )

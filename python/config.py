@@ -46,24 +46,22 @@ def loadSettings( configuration ):
         data = load( stream )
 
     data = data[ configuration ]
+    """
     if data[ 'debug' ]:
         if 'extra_files' in data:
             data[ 'extra_files' ] = getFiles( source_path,
                                               data[ 'extra_files' ] )
-
+    """
     if 'project_dir' in data:
         project_dir     = abspath( data[ 'project_dir' ] )
         angular_path    = abspath( join( project_dir, "dist", basename( project_dir ) ) + "/" )
         source_path     = abspath( join( project_dir, "src", "app" ) )
-        del data['project_dir']
 
     if 'angular_path' in data:
         angular_path    = abspath( data[ 'angular_path' ] ) + "/"
-        del data[ 'angular_path' ]
 
     if 'source_path' in data:
         source_path     = abspath( data[ 'source_path' ] )
-        del data['source_path']
 
     return data
 
