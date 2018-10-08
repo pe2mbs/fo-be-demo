@@ -20,7 +20,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 
@@ -36,7 +36,8 @@ import { TableSelectionExampleComponent } from './example/table-selection-exampl
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSortModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
-import {APP_BASE_HREF} from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 const appRoutes: Routes = [
   { path: 'example-table', component: TableSelectionExampleComponent },
@@ -66,7 +67,8 @@ const appRoutes: Routes = [
     MatPaginatorModule
   ],
   providers: [ { provide: APP_BASE_HREF, useValue : '/' },
-               { provide: LocationStrategy, useClass: HashLocationStrategy } ],
+               { provide: LocationStrategy, useClass: HashLocationStrategy },
+               { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true } ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
+"""Create an application instance for the 'Main Angular application package'."""
 #
-# Contacts API for the 'Python and Flask serving Angular'
+# Create an application instance for the 'Main Angular application package'
 # Copyright (C) 2018 Marc Bertens-Nguyen <m.bertens@pe2mbs.nl>
 #
 # This program is free software; you can redistribute it and/or
@@ -16,3 +18,17 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
+from applic.app import  create_app
+from os.path    import  abspath, dirname, isfile, join
+from sys        import  stderr
+
+ROOT_PATH = abspath( dirname( __file__ ) )
+CONFIG_FILE = 'config.json'
+if not isfile( join( ROOT_PATH, CONFIG_FILE ) ):
+    CONFIG_FILE = 'config.yml'
+
+if isfile( join( ROOT_PATH, CONFIG_FILE ) ):
+    app     = create_app( ROOT_PATH, 'config.json' )
+
+else:
+    print( "The config file is missing", file=stderr )

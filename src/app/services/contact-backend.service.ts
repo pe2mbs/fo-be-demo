@@ -35,7 +35,7 @@ export class ContactBackendService extends CrudBackendService<UserRecord>
 {
   constructor( httpClient:  HttpClient )
   {
-    super( '/contact', httpClient );
+    super( '/api/contact', httpClient );
     return;
   }
 }

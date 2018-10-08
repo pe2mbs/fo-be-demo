@@ -25,7 +25,7 @@ table
 
 th.mat-sort-header-sorted 
 {
-  color: black;
+    color: black;
 }
 
 .mat-column-select
@@ -36,6 +36,8 @@ th.mat-sort-header-sorted
 .mat-column-position
 {
     width: 100px;
+    text-align: right;
+    padding-right: 10px;
 }
 
 .mat-column-name

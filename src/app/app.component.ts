@@ -17,10 +17,25 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
+import { ContactBackendService } from './services/contact-backend.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {}
+export class AppComponent 
+{
+  constructor( private auth: AuthService, private contact: ContactBackendService )
+  {
+    console.log( 'AppComponent' );
+    auth.ngOnInit();
+
+    contact.getList$().subscribe( result => {
+      console.log( '/api/contacts', result );
+    } );
+    
+    return;
+  }
+}
