@@ -22,7 +22,7 @@
 
 export const environment = {
   production: false,
-  backend: 'https://localhost:6080'
+  backend: '/api'
 };
 
 /*
