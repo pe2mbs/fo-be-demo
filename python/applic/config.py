@@ -129,6 +129,8 @@ class Config( BaseConfig ):
         :param c:
         :return:
         """
+        delta_keys = ( "JWT_EXPIRATION_DELTA", "JWT_NOT_BEFORE_DELTA" )
+
         for key in c.keys():
             if key.isupper():
                 # Is the variable '**PATH**' in the name and starts with a dot.
@@ -137,7 +139,16 @@ class Config( BaseConfig ):
                     self[ key ] = os.path.abspath( os.path.join( self.root_path, c[ key ] ) )
 
                 else:
-                    self[ key ] = c[ key ]
+                    if key in delta_keys:
+                        if '=' in c[ key ]:
+                            settings = dict( map( int, x.split( '=' ) ) for x in c[ key ].split( ',' ) )
+                            print( "settings: %s" % ( repr( settings ) ) )
+
+                        else:
+                            self[ key ] = c[ key ]
+
+                    else:
+                        self[ key ] = c[ key ]
 
         #
         if 'DATABASE' in c:
