@@ -350,8 +350,102 @@ Enable the template editor
 
 Should be set to false or not set.
 
-### JWT_HEADER_TYPE:                
+### JWT_TOKEN_LOCATION
+Where to look for a JWT when processing a request. The options are 
+'headers', 'cookies', 'query_string', or 'json'. You can pass in a list 
+to check more then one location, such as: ['headers', 'cookies']. 
+Defaults to 'headers'
+
+### JWT_SECRET_KEY	
+The secret key needed for symmetric based signing algorithms, such as 
+HS*. If this is not set, we use the flask SECRET_KEY value instead.
+
+### JWT_PUBLIC_KEY	
+The public key needed for asymmetric based signing algorithms, such as 
+RS* or ES*. PEM format expected.
+
+### JWT_PRIVATE_KEY	
+The private key needed for asymmetric based signing algorithms, such as 
+RS* or ES*. PEM format expected.
+
+### JWT_HEADER_TYPE
+What header to look for the JWT in a request. Defaults to 
+'Authorization'
+
 Token
+
+### JWT_HEADER_NAME
+What type of header the JWT is in. Defaults to 'Bearer'. This can be 
+an empty string, in which case the header contains only the JWT (insead 
+of something like HeaderName: Bearer <JWT>)
+
+### JWT_IDENTITY_CLAIM	
+Claim in the tokens that is used as source of identity. For 
+interoperability, the JWT RFC recommends using 'sub'. Defaults to 
+'identity' for legacy reasons.
+
+### JWT_USER_CLAIMS	
+Claim in the tokens that is used to store user claims. Defaults to 
+'user_claims'.
+
+### JWT_CLAIMS_IN_REFRESH_TOKEN	
+If user claims should be included in refresh tokens. Defaults to False.
+
+### JWT_ERROR_MESSAGE_KEY	
+The key of the error message in a JSON error response when using the 
+default error handlers. Defaults to 'msg'.
+
+### JWT_QUERY_STRING_NAME	
+What query paramater name to look for a JWT in a request. Defaults to 
+'jwt'
+
+### JWT_ALGORITHM	
+Which algorithm to sign the JWT with. See here for the options. 
+Defaults to 'HS256'.
+
+### JWT_ACCESS_TOKEN_EXPIRES	
+How long an access token should live before it expires. This takes a 
+datetime.timedelta, and defaults to 15 minutes. Can be set to False 
+to disable expiration.
+
+Allowed labels with a value:
+* days
+* seconds
+* microseconds
+* milliseconds
+* minutes
+* hours
+* weeks
+
+### JWT_REFRESH_TOKEN_EXPIRES	
+How long a refresh token should live before it expires. This takes a 
+datetime.timedelta, and defaults to 30 days. Can be set to False to 
+disable expiration.
+
+Allowed labels with a value: 
+* days
+* seconds
+* microseconds
+* milliseconds
+* minutes
+* hours
+* weeks
+
+### JWT_IDENTITY_CLAIM	
+Claim in the tokens that is used as source of identity. 
+For interoperability, the JWT RFC recommends using 'sub'. 
+Defaults to 'identity' for legacy reasons.
+
+### JWT_USER_CLAIMS	
+Claim in the tokens that is used to store user claims. 
+Defaults to 'user_claims'.
+
+### JWT_CLAIMS_IN_REFRESH_TOKEN	
+If user claims should be included in refresh tokens. Defaults to False.
+
+### JWT_ERROR_MESSAGE_KEY	
+The key of the error message in a JSON error response when using the 
+default error handlers. Defaults to 'msg'.
 
 ### JWT_DEFAULT_REALM	
 The default realm. Defaults to Login Required
@@ -372,8 +466,6 @@ Should be set to 'email'
 The password key in the authentication request payload. Defaults to 
 password.
 
-### JWT_ALGORITHM	
-The token algorithm. Defaults to HS256
 
 ### JWT_LEEWAY	
 The amount of leeway given when decoding access tokens specified as an 
@@ -395,35 +487,6 @@ should be set to 'Token'
 Flag indicating if all tokens should verify their expiration time. 
 Defaults to True. It is not recommended to change this value.
 
-### JWT_EXPIRATION_DELTA	
-A datetime.timedelta value indicating how long tokens are valid for. 
-This value is added to the iat (issued at) claim. Defaults to 
-seconds=300
-
-Allowed labels with a value:
-* days
-* seconds
-* microseconds
-* milliseconds
-* minutes
-* hours
-* weeks
-
-
-### JWT_NOT_BEFORE_DELTA	
-A datetime.timedelta value indicating a relative time from the iat 
-(issued at) claim that the token can begin to be used. This value is 
-added to the iat (issued at) claim. Defaults to seconds=0.
-
-Allowed labels with a value: 
-* days
-* seconds
-* microseconds
-* milliseconds
-* minutes
-* hours
-* weeks
-
 ### JWT_VERIFY_CLAIMS	
 A list of claims to verify when decoding tokens. Defaults to 
 [ ['signature', 'exp', 'nbf', 'iat'] ].
@@ -431,6 +494,96 @@ A list of claims to verify when decoding tokens. Defaults to
 ### JWT_REQUIRED_CLAIMS	
 A list of claims that are required in a token to be considered valid. 
 Defaults to [ [ 'exp', 'iat', 'nbf' ] ]
+
+### JWT_ACCESS_COOKIE_NAME	
+The name of the cookie that holds the access token. Defaults to 
+access_token_cookie
+
+### JWT_REFRESH_COOKIE_NAME	
+The name of the cookie that holds the refresh token. Defaults to 
+refresh_token_cookie
+
+### JWT_ACCESS_COOKIE_PATH	
+What path should be set for the access cookie. Defaults to '/', which 
+will cause this access cookie to be sent in with every request. Should 
+be modified for only the paths that need the access cookie
+
+### JWT_REFRESH_COOKIE_PATH	
+What path should be set for the refresh cookie. Defaults to '/', which 
+will cause this refresh cookie to be sent in with every request. Should 
+be modified for only the paths that need the refresh cookie
+
+### JWT_COOKIE_SECURE	
+If the secure flag should be set on your JWT cookies. This will only 
+allow the cookies to be sent over https. Defaults to False, but in 
+production this should likely be set to True.
+
+### JWT_COOKIE_DOMAIN	
+Value to use for cross domain cookies. Defaults to None which sets this 
+cookie to only be readable by the domain that set it.
+
+### JWT_SESSION_COOKIE	
+If the cookies should be session cookies (deleted when the browser is 
+closed) or persistent cookies (never expire). Defaults to True (session 
+cookies).
+
+### JWT_COOKIE_SAMESITE	
+If the cookies should be sent in a cross-site browsing context. 
+Defaults to None, which means cookies are always sent.
+
+### JWT_COOKIE_CSRF_PROTECT	
+Enable/disable CSRF protection when using cookies. Defaults to True.
+
+### JWT_JSON_KEY	
+Key to look for in the body of an application/json request. Defaults 
+to 'access_token'
+
+### JWT_REFRESH_JSON_KEY	
+Key to look for the refresh token in an application/json request. 
+Defaults to 'refresh_token'
+
+### JWT_CSRF_METHODS	
+The request types that will use CSRF protection. Defaults to [ [ 'POST', 
+'PUT', 'PATCH', 'DELETE' ] ] 
+
+### JWT_ACCESS_CSRF_HEADER_NAME	
+Name of the header that should contain the CSRF double submit value 
+for access tokens. Defaults to X-CSRF-TOKEN.
+
+### JWT_REFRESH_CSRF_HEADER_NAME	
+Name of the header that should contains the CSRF double submit value 
+for refresh tokens. Defaults to X-CSRF-TOKEN.
+
+### JWT_CSRF_IN_COOKIES	
+If we should store the CSRF double submit value in another cookies when 
+using set_access_cookies() and set_refresh_cookies(). Defaults to True. 
+If this is False, you are responsible for getting the CSRF value to the 
+callers (see: get_csrf_token(encoded_token)).
+
+### JWT_ACCESS_CSRF_COOKIE_NAME	
+Name of the CSRF access cookie. Defaults to 'csrf_access_token'. 
+Only applicable if JWT_CSRF_IN_COOKIES is True
+
+### JWT_REFRESH_CSRF_COOKIE_NAME	
+Name of the CSRF refresh cookie. Defaults to 'csrf_refresh_token'. 
+Only applicable if JWT_CSRF_IN_COOKIES is True
+
+### JWT_ACCESS_CSRF_COOKIE_PATH	
+Path for the CSRF access cookie. Defaults to '/'. Only applicable if 
+JWT_CSRF_IN_COOKIES is True
+
+### JWT_REFRESH_CSRF_COOKIE_PATH	
+Path of the CSRF refresh cookie. Defaults to '/'. Only applicable if 
+JWT_CSRF_IN_COOKIES is True
+
+### JWT_BLACKLIST_ENABLED	
+Enable/disable token revoking. Defaults to False
+
+### JWT_BLACKLIST_TOKEN_CHECKS	
+What token types to check against the blacklist. The options are 
+'refresh' or 'access'. You can pass in a list to check more then one 
+type. Defaults to ['access', 'refresh']. Only used if blacklisting is 
+enabled.
 
 ### ALLOW_CORS_ORIGIN
 To allow Cross-Origin Resource Sharing should be set to true otherwise 

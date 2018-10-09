@@ -29,7 +29,8 @@ from flask import Config as BaseConfig
 
 
 class Config( BaseConfig ):
-    """Flask config enhanced with a `from_yaml` method."""
+    """Flask config enhanced with a `from_yaml` and `from_json` methods."""
+
     def from_file( self, config_file, silent=False ):
         """Load the configuration from a file, currently JSON and YAML formats
         are supported
@@ -130,9 +131,10 @@ class Config( BaseConfig ):
         :param c:
         :return:
         """
-        delta_keys = ( "JWT_EXPIRATION_DELTA", "JWT_NOT_BEFORE_DELTA",
-                       "ACCESS_TOKEN_EXPIRES", "PERMANENT_SESSION_LIFETIME",
-                       "SEND_FILE_MAX_AGE_DEFAULT" )
+        delta_keys = ( "PERMANENT_SESSION_LIFETIME", 
+                       "SEND_FILE_MAX_AGE_DEFAULT",
+                       "JWT_ACCESS_TOKEN_EXPIRES", 
+                       "JWT_REFRESH_TOKEN_EXPIRES" )
 
         for key in c.keys():
             if key.isupper():
@@ -152,15 +154,16 @@ class Config( BaseConfig ):
 
                     if key in delta_keys:
                         if '=' in c[ key ]:
+                            # convert the string to a dict.
                             settings = dict( map( func, x.split( '=' ) ) for x in c[ key ].split( ',' ) )
                             self[ key ] = datetime.timedelta( **settings )
+
                         else:
                             self[ key ] = c[ key ]
 
                     else:
                         self[ key ] = c[ key ]
 
-        #
         if 'DATABASE' in c:
             database_cfg = c[ 'DATABASE' ]
             engine = database_cfg[ 'ENGINE' ]
@@ -195,6 +198,7 @@ class Config( BaseConfig ):
 
             self[ 'SQLALCHEMY_DATABASE_URI' ] = db_uri
 
+        # The ajustment if the `SERVER_NAME` variable.
         if 'HOST' in self and 'SERVER_NAME' not in self:
             self[ 'SERVER_NAME' ] = self[ 'HOST' ] + self.get( 'PORT', 80 )
 
