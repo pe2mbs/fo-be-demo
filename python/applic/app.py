@@ -165,6 +165,7 @@ def registerCommands( app, module ):
     app.cli.add_command( commands.lint )
     app.cli.add_command( commands.clean )
     app.cli.add_command( commands.urls )
+    app.cli.add_command( commands.runssl_command )
     if hasattr( module, 'registerCommands' ):
         module.registerCommands( app )
 

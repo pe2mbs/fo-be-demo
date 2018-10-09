@@ -3,6 +3,7 @@ COMMON: &common
   SQLALCHEMY_TRACK_MODIFICATIONS: true
   HOST:                           localhost
   PORT:                           8000
+  API_MODULE:                     conduit
   APP_PATH:                       .  # This directory
   PROJECT_PATH:                   .
   ANGULAR_PATH:                   ./web/angular-realworld-example-app/dist
@@ -31,7 +32,6 @@ DEVELOPMENT: &development
   DEBUG:                          true
   ENV:                            dev
   TESTING:                        true
-  API_MODULE:                     conduit
   DATABASE:
     ENGINE:                       sqlite
     SCHEMA:                       dev.db
@@ -39,25 +39,21 @@ DEVELOPMENT: &development
     CERTIFICATE:                  cert/dev.angular.crt
     KEYFILE:                      cert/dev.angular.key
   CACHE_TYPE:                     simple  # Can be "memcached", "redis", etc.
-  ACCESS_TOKEN_EXPIRES:           days=1
 
 STAGING: &staging
   <<: *common
   SECRET_KEY:                     sortasecure
+  ENV:                            stag
   DATABASE:
     ENGINE:                       postgresql
     USER:                         postgres
     PASSWD:                       password
-    SCHEMA:                       staging_database
+    PASSWORD:                     staging_database
     HOST:                         localhost
     PORT:                         5432
   SSL:
     CERTIFICATE:                  cert/dev.angular.crt
     KEYFILE:                      cert/dev.angular.key
-  DATABASE:
-    ENGINE:                       postgresql
-    HOST:                         localhost
-    DATABASE:                     staging
 
 PRODUCTION: &production
   <<: *common
@@ -70,4 +66,4 @@ PRODUCTION: &production
     PORT:                         5432
     SCHEMA:                       production
     USER:                         postgres
-    PASSWD:                       password
+    PASSWORD:                     password

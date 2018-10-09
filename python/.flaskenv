@@ -1,0 +1,3 @@
+FLASK_APP=autoapp.py
+FLASK_ENV=DEVELOPMENT
+

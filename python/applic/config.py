@@ -174,6 +174,9 @@ class Config( BaseConfig ):
 
             self[ 'SQLALCHEMY_DATABASE_URI' ] = db_uri
 
+        if 'HOST' in self and 'SERVER_NAME' not in self:
+            self[ 'SERVER_NAME' ] = self[ 'HOST' ] + self.get( 'PORT', 80 )
+
         if self[ 'DEBUG' ]:
             self.__dump()
 
