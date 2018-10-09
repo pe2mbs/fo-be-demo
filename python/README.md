@@ -400,10 +400,29 @@ A datetime.timedelta value indicating how long tokens are valid for.
 This value is added to the iat (issued at) claim. Defaults to 
 seconds=300
 
+Allowed labels with a value:
+* days
+* seconds
+* microseconds
+* milliseconds
+* minutes
+* hours
+* weeks
+
+
 ### JWT_NOT_BEFORE_DELTA	
 A datetime.timedelta value indicating a relative time from the iat 
 (issued at) claim that the token can begin to be used. This value is 
 added to the iat (issued at) claim. Defaults to seconds=0.
+
+Allowed labels with a value: 
+* days
+* seconds
+* microseconds
+* milliseconds
+* minutes
+* hours
+* weeks
 
 ### JWT_VERIFY_CLAIMS	
 A list of claims to verify when decoding tokens. Defaults to 
@@ -544,6 +563,15 @@ signature is not older than this value.
 
 Default: timedelta(days=31) (2678400 seconds)
 
+Allowed labels with a value: 
+* days
+* seconds
+* microseconds
+* milliseconds
+* minutes
+* hours
+* weeks
+
 ### SESSION_REFRESH_EACH_REQUEST
 Control whether the cookie is sent with every response when 
 session.permanent is true. Sending the cookie every time (the default) 
@@ -567,6 +595,15 @@ value on a per-file basis using get_send_file_max_age() on the
 application or blueprint.
 
 Default: timedelta(hours=12) (43200 seconds)
+
+Allowed labels with a value: 
+* days
+* seconds
+* microseconds
+* milliseconds
+* minutes
+* hours
+* weeks
 
 ### SERVER_NAME
 Inform the application what host and port it is bound to. Required for 

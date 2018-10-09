@@ -24,6 +24,7 @@ import errno
 import copy
 import yaml
 import json
+import datetime
 from flask import Config as BaseConfig
 
 
@@ -129,7 +130,9 @@ class Config( BaseConfig ):
         :param c:
         :return:
         """
-        delta_keys = ( "JWT_EXPIRATION_DELTA", "JWT_NOT_BEFORE_DELTA" )
+        delta_keys = ( "JWT_EXPIRATION_DELTA", "JWT_NOT_BEFORE_DELTA",
+                       "ACCESS_TOKEN_EXPIRES", "PERMANENT_SESSION_LIFETIME",
+                       "SEND_FILE_MAX_AGE_DEFAULT" )
 
         for key in c.keys():
             if key.isupper():
@@ -139,11 +142,18 @@ class Config( BaseConfig ):
                     self[ key ] = os.path.abspath( os.path.join( self.root_path, c[ key ] ) )
 
                 else:
+                    def func( value ):
+                        try:
+                            return int( value )
+                        except:
+                            pass
+
+                        return value
+
                     if key in delta_keys:
                         if '=' in c[ key ]:
-                            settings = dict( map( int, x.split( '=' ) ) for x in c[ key ].split( ',' ) )
-                            print( "settings: %s" % ( repr( settings ) ) )
-
+                            settings = dict( map( func, x.split( '=' ) ) for x in c[ key ].split( ',' ) )
+                            self[ key ] = datetime.timedelta( **settings )
                         else:
                             self[ key ] = c[ key ]
 
