@@ -62,16 +62,16 @@
   </mat-paginator>
   <div class="fab-buttons">
     <button mat-mini-fab color="primary" class="fab-action-button"
-      [disabled]="addDisabled">
+      [disabled]="addDisabled" (click)="addRecord()">
       <mat-icon aria-label="Add new record">add</mat-icon>
     </button>
     <button mat-mini-fab color="primary" class="fab-action-button"
-      [disabled]="editDisabled">
+      [disabled]="editDisabled"  (click)="editRecord()">
       <mat-icon aria-label="Edit an existing record">edit</mat-icon>
     </button>
     <span class="example-spacer"></span>
     <button mat-mini-fab color="primary" class="fab-action-button"
-      [disabled]="deleteDisabled" >
+      [disabled]="deleteDisabled" (click)="deleteRecord()">
       <mat-icon aria-label="Delete existing records">delete</mat-icon>
     </button>
   </div>

@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": { 
+			"**/.txt": true,
+			"**/.md": true,
+			"**/.conf": true,
+			"./node_modules/**": true,
+			"./e2e/**": true,
+			"./dist/**": true,
+			"./python/**": true
+		}
+	}
+}
