@@ -29,18 +29,18 @@ class RegexConverter( BaseConverter ):
         self.regex = items[ 0 ]
 
 
-blueprint   = Blueprint( 'angular', __name__ )
+bluePrint   = Blueprint( 'angular', __name__ )
 logger      = None
 
 
 def registerAngular( app, cors ):
     # Set the logger for the oldangular module
     app.url_map.converters[ 'regex' ] = RegexConverter
-    app.register_blueprint( blueprint )
+    app.register_blueprint( bluePrint )
     return
 
 
-@blueprint.route( '/' )
+@bluePrint.route( '/' )
 def index():
     angular_path = current_app.config[ 'ANGULAR_PATH' ]
     env = current_app.config[ 'ENV' ]
@@ -56,9 +56,18 @@ def index():
         raise
 
 
-@blueprint.route( r"/<regex('\w\.(js|css)'):path>" )
-def angular_src( path ):
+@bluePrint.route( r"/<regex('\w\.(js|css)'):path>" )
+def angularSource( path ):
     angular_path = current_app.config[ 'ANGULAR_PATH' ]
     env = current_app.config[ 'ENV' ]
     current_app.logger.info("Angular dist (%s) : %s" % ( env, angular_path ) )
     return send_from_directory( angular_path, path )
+
+
+@bluePrint.route( r"/static/<path>" )
+def staticSource( path ):
+    static_path = os.path.join( current_app.config[ 'PROJECT_PATH' ], 'static' )
+    env = current_app.config[ 'ENV' ]
+    print("Static path (%s) : %s" % ( env, static_path ) )
+    print("Requested path   : %s" % ( path ) )
+    return send_from_directory( static_path, path )

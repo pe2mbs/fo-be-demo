@@ -43,26 +43,26 @@ class InvalidUsage( Exception ):
 
         self.payload = payload
 
-    def to_json( self ):
+    def toJson( self ):
         rv = self.message
         return jsonify( rv )
 
     @classmethod
-    def user_not_found( cls ):
+    def userNotFound( cls ):
         return cls( **USER_NOT_FOUND )
 
     @classmethod
-    def user_already_registered( cls ):
+    def userAlreadyRegistered( cls ):
         return cls( **USER_ALREADY_REGISTERED )
 
     @classmethod
-    def uknown_error( cls ):
+    def unknownError( cls ):
         return cls( **UNKNOWN_ERROR )
 
     @classmethod
-    def article_not_found( cls ):
+    def articleNotFound( cls ):
         return cls( **ARTICLE_NOT_FOUND )
 
     @classmethod
-    def comment_not_owned( cls ):
+    def commentNotOwned( cls ):
         return cls( **COMMENT_NOT_OWNED )

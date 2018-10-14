@@ -31,7 +31,7 @@ from flask import Config as BaseConfig
 class Config( BaseConfig ):
     """Flask config enhanced with a `from_yaml` and `from_json` methods."""
 
-    def from_file( self, config_file, silent=False ):
+    def fromFile( self, config_file, silent=False ):
         """Load the configuration from a file, currently JSON and YAML formats
         are supported
 
@@ -46,17 +46,17 @@ class Config( BaseConfig ):
 
         ext = os.path.splitext( config_file )[ 1 ]
         if ext == '.json':
-            result = self.from_json( config_file )
+            result = self.fromJson( config_file )
 
         elif ext == '.yml':
-            result = self.from_yaml( config_file )
+            result = self.fromYaml( config_file )
 
         else:
             raise Exception( "Could not load file type: '%s'" % ( ext ) )
 
         return result
 
-    def from_yaml( self, config_file, silent=False ):
+    def fromYaml( self, config_file, silent=False ):
         """Load the configuration from a file, currently YAML formats
         are supported
 
@@ -85,7 +85,7 @@ class Config( BaseConfig ):
 
         return self._modify( c.get( env, c ) )
 
-    def from_json( self, config_file, silent=False ):
+    def fromJson( self, config_file, silent=False ):
         """Load the configuration from a file, currently JSON formats
         are supported
 
@@ -114,7 +114,7 @@ class Config( BaseConfig ):
 
         # Get the environment segment
         segment = copy.copy( c.get( env, c ) )
-        #self.__dump( segment )
+        # self.__dump( segment )
         if 'inport' in segment:
             # Get the import segment
             c = copy.copy( c.get( segment[ 'inport' ], {} ) )
@@ -147,7 +147,8 @@ class Config( BaseConfig ):
                     def func( value ):
                         try:
                             return int( value )
-                        except:
+
+                        except Exception as exc:
                             pass
 
                         return value
@@ -194,7 +195,6 @@ class Config( BaseConfig ):
                     database_cfg[ 'HOST_ADDRESS' ] = '{USERNAME}@{HOST_ADDRESS}'.format( **database_cfg )
 
                 db_uri = '{ENGINE}://{HOST_ADDRESS}/{SCHEMA}'.format( **database_cfg )
-
 
             self[ 'SQLALCHEMY_DATABASE_URI' ] = db_uri
 

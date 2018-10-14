@@ -61,15 +61,20 @@ Python 2.7.15
 ``` 
 ## Flask
 ``` 
-Flask                         0.10.1                
-Flask-Bcrypt                  0.7.1                 
-Flask-Builder                 0.9                   
-Flask-Classy                  0.6.10                
-Flask-Cors                    3.0.6                 
-Flask-Mail                    0.9.1                 
-Flask-Migrate                 1.8.0                 
-Flask-Script                  2.0.5                 
-Flask-SQLAlchemy              2.1            
+Flask==1.0.2              
+Flask-Bcrypt==0.7.1                
+Flask-Builder==0.9                   
+Flask-Caching==1.4.0               
+Flask-Cors==3.0.6                 
+Flask-JWT-Extended==3.13.1                 
+Flask-Migrate==2.2.1                 
+Flask-CLI==0.4.05      
+Click==7.0 
+Flask-SQLAlchemy==2.3.2 
+alembic==0.8.4
+PyJWT==1.6.4
+PyYAML==3.13
+Werkzeug==0.14.1
 ```   
   
 # Starting the web service 
@@ -176,11 +181,108 @@ PRODUCTION: &production
 
 
 ## config.json
+A typical config file has four sections: COMMON, DEVELOPMENT, STAGING and PRODUCTION. 
+The section COMMON is common to all sections that include "inport": "COMMON" 
 
-
-
+```
+{
+  "COMMON":
+  {
+    "SECRET_KEY":                     "insecure",
+    "HOST":                           "localhost",
+    "PORT":                           8000,
+    "APP_PATH":                       ".",
+    "API_MODULE":                     "conduit",
+    "PROJECT_PATH":                   ".",
+    "ANGULAR_PATH":                   "./web/angular-realworld-example-app/dist",
+    "BCRYPT_LOG_ROUNDS":              13,
+    "DEBUG_TB_INTERCEPT_REDIRECTS":   false,
+    "CACHE_TYPE":                     "simple",
+    "SQLALCHEMY_TRACK_MODIFICATIONS": false,
+    "JWT_AUTH_USERNAME_KEY":          "email",
+    "JWT_AUTH_HEADER_PREFIX":         "Token",
+    "JWT_HEADER_TYPE":                "Token",
+    "JWT_EXPIRATION_DELTA":           "weeks=52",
+    "ALLOW_CORS_ORIGIN":              false,
+    "CORS_ORIGIN_WHITELIST": [
+      "http://127.0.0.1:4000",
+      "http://127.0.0.1:4200",
+      "http://127.0.0.1:5000",
+      "http://127.0.0.1:8000",
+      "http://0.0.0.0:4000",
+      "http://0.0.0.0:4200",
+      "http://0.0.0.0:5000",
+      "http://0.0.0.0:8000",
+      "http://localhost:4000",
+      "http://localhost:4200",
+      "http://localhost:5000",
+      "http://localhost:8000"
+    ]
+  },
+  "DEVELOPMENT": {
+    "inport": "COMMON",
+    "DEBUG":                          true,
+    "ENV":                            "dev",
+    "TESTING":                        true,
+    "DATABASE":
+    {
+      "ENGINE":                       "sqlite",
+      "SCHEMA":                       "dev.db"
+    },
+    "SQLALCHEMY_TRACK_MODIFICATIONS": false,
+    "SSL":
+    {
+      "CERTIFICATE":                  "cert/dev.angular.crt",
+      "KEYFILE":                      "cert/dev.angular.key"
+    },
+    "ACCESS_TOKEN_EXPIRES":           "days=365"
+  },
+  "STAGING":
+  {
+    "inport": "COMMON",
+    "SECRET_KEY":                     "sortasecure",
+    "ENV":                            "staging",
+    "DATABASE":
+    {
+      "ENGINE":                       "postgresql",
+      "USER":                         "postgres",
+      "PASSWD":                       "password",
+      "SCHEMA":                       "staging",
+      "HOST":                         "localhost",
+      "PORT":                         5432
+    },
+    "SSL":
+    {
+      "CERTIFICATE":                  "cert/dev.angular.crt",
+      "KEYFILE":                      "cert/dev.angular.key"
+    }
+  },
+  "PRODUCTION":
+  {
+    "inport": "COMMON",
+    "SECRET_KEY":                     "shouldbereallysecureatsomepoint",
+    "ENV":                            "prod",
+    "DEBUG":                          false,
+    "DATABASE": {
+      "ENGINE":                       "postgresql",
+      "HOST":                         "localhost",
+      "PORT":                         5432,
+      "SCHEMA":                       "production",
+      "USER":                         "postgres",
+      "PASSWD":                       "password"
+    },
+    "SSL":
+    {
+      "CERTIFICATE":                  "cert/prod.angular.crt",
+      "KEYFILE":                      "cert/prod.angular.key"
+    }
+  }
+}
+```
 
 ## configuration keys
+Both yaml and json files use the same configuration keys.
+
 ### ANGULAR_PATH
 The configures the location of the angular web application. This may be 
 a absolute or relative path.

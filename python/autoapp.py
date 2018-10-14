@@ -18,7 +18,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-from applic.app import  create_app
+from applic.app import  createApp
 from os.path    import  abspath, dirname, isfile, join
 from sys        import  stderr
 
@@ -28,7 +28,7 @@ if not isfile( join( ROOT_PATH, CONFIG_FILE ) ):
     CONFIG_FILE = 'config.yml'
 
 if isfile( join( ROOT_PATH, CONFIG_FILE ) ):
-    app     = create_app( ROOT_PATH, 'config.json' )
+    app     = createApp( ROOT_PATH, 'config.json' )
 
 else:
     print( "The config file is missing", file=stderr )

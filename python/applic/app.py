@@ -31,7 +31,7 @@ from applic.exceptions import InvalidUsage
 from applic.extensions import bcrypt, cache, db, migrate, jwt, cors, Flask
 
 
-def create_app( root_path, config_file, module = None ):
+def createApp( root_path, config_file, module = None ):
     """An application factory, as explained here:
        http://flask.pocoo.org/docs/patterns/appfactories/.
 
@@ -46,13 +46,13 @@ def create_app( root_path, config_file, module = None ):
         logDict = json.load( stream )
 
     dictConfig( logDict )
-    app = Flask( __name__.split ( '.' )[ 0 ],
+    app = Flask( __name__.split( '.' )[ 0 ],
                  static_url_path    = "",
                  root_path          = root_path,
                  static_folder      = root_path )
 
     app.logger.info( "Starting Flask application, loading configuration." )
-    app.config.from_file( join( root_path, config_file ) )
+    app.config.fromFile( join( root_path, config_file ) )
     app.logger.setLevel( logging.DEBUG if app.config[ 'DEBUG' ] else logging.ERROR )
     app.logger.log( app.logger.level,
                     "Logging Flask application: %s" % ( logging._levelToName[ app.logger.level ] ) )
@@ -85,8 +85,11 @@ def registerExtensions( app, module ):
     migrate.init_app( app, db )
     jwt.init_app( app )
     # Set the auth callbacks
-    jwt.user_loader_callback_loader( module.jwt_identity )
-    jwt.user_identity_loader( module.identity_loader )
+    if hasattr( module, 'jwt_identity' ):
+        jwt.user_loader_callback_loader( module.jwt_identity )
+
+    if hasattr( module, 'identity_loader' ):
+        jwt.user_identity_loader( module.identity_loader )
 
     if hasattr( module, 'registerExtensions' ):
         module.registerExtensions( app, db )
@@ -106,10 +109,9 @@ def registerBluePrints( app, module ):
         app.logger.info( "NOT allowing CORS" )
 
     registerAngular( app, cors )
-    if not hasattr( module, 'registerApi' ):
-        raise Exception( "Missing registerApi() in module %s" % ( module ) )
+    if hasattr( module, 'registerApi' ):
+        module.registerApi( app, cors )
 
-    module.registerApi( app, cors )
     return
 
 
@@ -165,7 +167,7 @@ def registerCommands( app, module ):
     app.cli.add_command( commands.lint )
     app.cli.add_command( commands.clean )
     app.cli.add_command( commands.urls )
-    app.cli.add_command( commands.runssl_command )
+    app.cli.add_command( commands.runsslCommand )
     if hasattr( module, 'registerCommands' ):
         module.registerCommands( app )
 

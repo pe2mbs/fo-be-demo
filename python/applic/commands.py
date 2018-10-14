@@ -27,6 +27,13 @@ import click
 from flask import current_app
 from flask.cli import with_appcontext
 from werkzeug.exceptions import MethodNotAllowed, NotFound
+from flask.cli import ( pass_script_info,
+                        CertParamType,
+                        _validate_key,
+                        get_debug_flag,
+                        show_server_banner,
+                        get_env,
+                        DispatchingApp )
 
 HERE            = os.path.abspath( os.path.dirname( __file__ ) )
 PROJECT_ROOT    = os.path.join( HERE, os.pardir )
@@ -140,14 +147,6 @@ def urls(url, order):
 
     return
 
-from flask.cli import ( pass_script_info,
-                        CertParamType,
-                        _validate_key,
-                        get_debug_flag,
-                        show_server_banner,
-                        get_env,
-                        DispatchingApp )
-
 
 @click.command('runssl', short_help='Runs a SSL/TLS server.')
 @click.option('--host', '-h', default='127.0.0.1',
@@ -172,8 +171,8 @@ from flask.cli import ( pass_script_info,
 @click.option('--with-threads/--without-threads', default=True,
               help='Enable or disable multithreading.')
 @pass_script_info
-def runssl_command( info, host, port, reload, debugger, eager_loading,
-                    with_threads, cert):
+def runsslCommand( info, host, port, reload, debugger, eager_loading,
+                   with_threads, cert ):
     """Run a local development server.
 
     This server is for development purposes only. It does not provide
@@ -220,9 +219,8 @@ def runssl_command( info, host, port, reload, debugger, eager_loading,
 
     from werkzeug.serving import run_simple
     run_simple( host, port, app,
-                use_reloader=reload,
-                reloader_type='stat',
-                use_debugger=debugger,
-                threaded=with_threads,
-                ssl_context=cert )
-
+                use_reloader = reload,
+                reloader_type = 'stat',
+                use_debugger = debugger,
+                threaded = with_threads,
+                ssl_context = cert )

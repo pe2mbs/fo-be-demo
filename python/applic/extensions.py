@@ -75,4 +75,3 @@ migrate = Migrate()
 cache   = Cache()
 cors    = CORS()
 jwt     = JWTManager()
-

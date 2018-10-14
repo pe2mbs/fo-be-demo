@@ -23,6 +23,7 @@ from functools import wraps\
 
 logObject = None
 
+
 def getLogger( root = 'flask.app' ):
     """Gets the logger instance
 
@@ -30,6 +31,7 @@ def getLogger( root = 'flask.app' ):
     :return:        Logger class
     """
     return logging.getLogger( root )
+
 
 def appLogger( func ):
     """Decorator to log the entry of a function/procedure/route
@@ -60,4 +62,3 @@ def appLogger( func ):
         return func( *args, **kwargs )
 
     return wrapper
-
