@@ -1,0 +1,188 @@
+<mat-card>    
+  <!-- Title of an Card -->    
+  <mat-toolbar color="primary">
+      <mat-icon>local_post_office</mat-icon>
+      <span class="mat-toolbar-text">Configuration for Mail-Monitor</span>
+  </mat-toolbar>
+  <mat-card-content>   
+    <form [formGroup]="parts">
+      <mat-slide-toggle formControlName="active">
+          Service Active
+      </mat-slide-toggle>
+
+
+      <mat-form-field class="input-full-width">
+        <input matInput 
+               placeholder="PAC file" 
+               formControlName="pacFile">
+        <mat-hint>You can obtain this from your browser, see proxy configuration.</mat-hint>
+        <mat-error *ngIf="pacFile.hasError('required')">
+          You need to provide a PAC file location.
+        </mat-error>
+        <mat-error *ngIf="pacFile.hasError('proxyError')">
+          {{ pacFile.errors.proxyMessage }}
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="input-full-width">
+        <input matInput 
+               placeholder="Exchange Server address" 
+               formControlName="webmailServer">
+        <mat-hint>This is the webmail exchange server address.</mat-hint>
+        <mat-error *ngIf="webmailServer.hasError('required')">
+          You need to provide the exchange server address
+        </mat-error>
+        <mat-error *ngIf="webmailServer.hasError('exchangeError')">
+            {{ webmailServer.errors.exchangeMessage }}
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="input-50-width">
+        <input matInput 
+               placeholder="Exchange Account name" 
+               formControlName="dasId">
+        <mat-hint>This is the DAS-ID of the group account.</mat-hint>
+        <mat-error *ngIf="dasId.hasError('required')">
+          You need to provide the DAS-ID of the group account.
+        </mat-error>
+        <mat-error *ngIf="dasId.hasError('minlength')">
+          You need to provide the DAS-ID of the group account of at least {{ dasId.errors.minlength.requiredLength }} characters.
+        </mat-error>
+        <mat-error *ngIf="dasId.hasError('invalidUserOrPassword')">
+            The username or password is not valid.
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="input-25-width shift-25">
+        <input matInput 
+               placeholder="Exchange Account password" 
+               formControlName="dasPassword2"
+               [type]="hideDas1 ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hideDas1 = !hideDas1">
+          {{hideDas1 ? 'visibility' : 'visibility_off'}}
+        </mat-icon>
+        <mat-hint>This is the DAS-ID group account password.</mat-hint>
+        <mat-error *ngIf="dasPassword1.hasError('required')">
+          You need to provide the DAS-ID group account password.
+        </mat-error>
+        <mat-error *ngIf="dasPassword1.hasError('minlength')">
+          You need to provide the password of the group account of at least {{ 
+                      dasPassword1.errors.minlength.requiredLength }} characters.
+        </mat-error>
+        <mat-error *ngIf="dasPassword1.hasError('invalidUserOrPassword')">
+            The username or password is not valid.
+        </mat-error>
+        <mat-error *ngIf="dasPassword1.hasError('passwordDontMatch')">
+          The passwords don't match.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input-25-width shift-25">
+        <input matInput 
+                placeholder="Retype Exchange Account password" 
+                formControlName="dasPassword2"
+                [type]="hideDas2 ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hideDas2 = !hideDas2">
+          {{hideDas1 ? 'visibility' : 'visibility_off'}}
+        </mat-icon>
+        <mat-hint>This is the DAS-ID group account password.</mat-hint>
+        <mat-error *ngIf="dasPassword2.hasError('required')">
+          You need to provide the DAS-ID group account password.
+        </mat-error>
+        <mat-error *ngIf="dasPassword2.hasError('minlength')">
+          You need to provide the password of the group account of at least {{ dasPassword2.errors.minlength.requiredLength }} characters.
+        </mat-error>
+        <mat-error *ngIf="dasPassword2.hasError('invalidUserOrPassword')">
+            The username or password is not valid.
+        </mat-error>
+        <mat-error *ngIf="dasPassword2.hasError('passwordDontMatch')">
+            The passwords don't match.
+        </mat-error>
+      </mat-form-field>
+  
+
+      <mat-form-field class="protocol-select">
+        <mat-select placeholder="Protocol" formControlName="storageProtocol">
+          <mat-option *ngFor="let protocol of protocols" [value]="protocol.value">
+            {{protocol.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field class="storage-location">
+        <input matInput 
+               placeholder="Storage location"
+               formControlName="storageLocation" >
+        <mat-hint>The storage location of the test data.</mat-hint>
+        <mat-error *ngIf="storageLocation.hasError('required')">
+          You need to provide the Storage location where the data is saved.
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="input-50-width" *ngIf="needStorageUser()">
+        <input matInput 
+               placeholder="Storage Account name" 
+               formControlName="storageUsername">
+        <mat-hint>This is the Username for accessing the storage.</mat-hint>
+        <mat-error *ngIf="storageUsername.hasError('required')">
+          You need to provide the Username for accessing the storage.
+        </mat-error>
+        <mat-error *ngIf="storageUsername.hasError('minlength')">
+          You need to provide the Username for accessing the storage of at least {{ storageUsername.errors.minlength.requiredLength }} characters.
+        </mat-error>
+        <mat-error *ngIf="storageUsername.hasError('invalidUserOrPassword')">
+            The username or password is not valid.
+        </mat-error>
+      </mat-form-field >
+
+
+      <mat-form-field class="input-25-width shift-25" *ngIf="needStorageUser()">
+          <input matInput 
+                  placeholder="Storage Account password" 
+                  formControlName="storagePassword1"
+                  [type]="hideStorage1 ? 'password' : 'text'">
+          <mat-icon matSuffix (click)="hideStorage1 = !hideStorage1">
+            {{hideStorage ? 'visibility' : 'visibility_off'}}
+          </mat-icon>
+          <mat-hint>This is the password for accessing the storage.</mat-hint>
+          <mat-error *ngIf="storagePassword1.hasError('required')">
+            You need to provide password for accessing the storage.
+          </mat-error>
+          <mat-error *ngIf="storagePassword1.hasError('invalidUserOrPassword')">
+              The username or password is not valid.
+          </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input-25-width shift-25" *ngIf="needStorageUser()">
+        <input matInput 
+                placeholder="Storage Account password" 
+                formControlName="storagePassword2"
+                [type]="hideStorage2 ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hideStorage2 = !hideStorage2">
+          {{hideStorage ? 'visibility' : 'visibility_off'}}
+        </mat-icon>
+        <mat-hint>This is the password for accessing the storage.</mat-hint>
+        <mat-error *ngIf="storagePassword2.hasError('required')">
+          You need to provide password for accessing the storage.
+        </mat-error>
+        <mat-error *ngIf="storagePassword2.hasError('invalidUserOrPassword')">
+            The username or password is not valid.
+        </mat-error>
+      </mat-form-field>
+
+    </form>
+  </mat-card-content>   
+  <mat-card-actions>
+    <button mat-fab 
+            type="submit" 
+            color="primary" 
+            (click)="update( $event )">
+      <mat-icon>save</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>    

@@ -22,12 +22,13 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatInputModule, MatCardModule, MatSlideToggleModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { PagerService } from './services/pager.service';
 import { ContactBackendService } from './services/contact-backend.service';
 import { PaginationComponent } from './pagination/pagination.component';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -38,9 +39,17 @@ import { MatSortModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { MailMonitorComponent } from './ew/mail-monitor/mail-monitor.component';
+import { MailConfigComponent } from './ew/mail-monitor/mail-config/mail-config.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MailConfigService } from './ew/mail-monitor/mail-config/mail-config.service';
+import { PasswordComponent } from './components/password/password.component';
+import { UsPhoneComponent } from './components/us-phone/us-phone.component';
 
 const appRoutes: Routes = [
   { path: 'example-table', component: TableSelectionExampleComponent },
+  { path: 'mail-monitor', component: MailMonitorComponent },
+  { path: 'mail-config', component: MailConfigComponent },
   { path: '**', redirectTo: '/' }
 ];
 
@@ -48,6 +57,10 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     TableSelectionExampleComponent,
+    MailMonitorComponent,
+    MailConfigComponent,
+    PasswordComponent,
+    UsPhoneComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -57,18 +70,25 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatTableModule,
+    MatInputModule,
     MatIconModule,
+    MatCardModule,
     MatToolbarModule,
+    MatSelectModule,
     MatSortModule,
+    MatSlideToggleModule,
     MatProgressSpinnerModule,
     MatPaginatorModule
   ],
   providers: [ { provide: APP_BASE_HREF, useValue : '/' },
                { provide: LocationStrategy, useClass: HashLocationStrategy },
-               { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true } ],
+               { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+               MailConfigService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -30,12 +30,12 @@ export class AppComponent
   constructor( private auth: AuthService, private contact: ContactBackendService )
   {
     console.log( 'AppComponent' );
-    auth.ngOnInit();
+    /*auth.ngOnInit();
 
     contact.getList$().subscribe( result => {
       console.log( '/api/contacts', result );
     } );
-    
+    */
     return;
   }
 }
