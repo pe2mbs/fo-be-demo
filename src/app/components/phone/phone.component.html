@@ -1,0 +1,13 @@
+<mat-form-field class="full-width" [formGroup]="parts">
+  <input  class="area" 
+          formControlName="area" 
+          [size]="areaLength">
+  <span>&ndash;</span>
+  <input  class="exchange" 
+          formControlName="exchange" 
+          [size]="exchangeLength">
+  <span>&ndash;</span>
+  <input  class="subscriber" 
+          formControlName="subscriber" 
+          [size]="subscriberLength">
+</mat-form-field>

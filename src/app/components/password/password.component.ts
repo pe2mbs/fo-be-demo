@@ -8,11 +8,11 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'mat-ex-password',
-  templateUrl: './password.component.html',
-  styleUrls: ['./password.component.scss'],
-  providers: [ { provide: MatFormFieldControl, 
-                 useExisting: PasswordComponent } ],
+  selector:     'mat-form-field-ex-password',
+  templateUrl:  './password.component.html',
+  styleUrls: [  './password.component.scss'],
+  providers: [  { provide: MatFormFieldControl, 
+                  useExisting: MatExPasswordComponent } ],
   // tslint:disable-next-line:use-host-property-decorator
   host: {
     '[class.floating]':         'shouldLabelFloat',
@@ -20,24 +20,24 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
     '[attr.aria-describedby]':  'describedBy',
   }                 
 })
-export class PasswordComponent implements MatFormFieldControl<string>, OnInit, OnDestroy {
+export class MatExPasswordComponent implements MatFormFieldControl<string>, OnInit, OnDestroy {
   static nextId = 0;
 
   private _placeholder: string;
-  private _required = false;
-  private _disabled = false;
-  public _width = '100%';
+  private _required   = false;
+  private _disabled   = false;
+  public _width       = '100%';
   public _padding_left = '0';
   public _padding_right = '0';
-  public hint_text = 'Enter your password';
-  public errorState = false;
-  public controlType = 'app-password';
+  public hint_text    = 'Enter your password';
+  public errorState   = false;
+  public controlType  = 'mat-form-field-ex-password';
   public parts: FormGroup;
-  public hide  = true;
-  public focused = false;
+  public hide         = true;
+  public focused      = false;
   public stateChanges = new Subject<void>();
 
-  @HostBinding() id = `app-password-${PasswordComponent.nextId++}`;
+  @HostBinding() id = `mat-form-field-ex-password-${MatExPasswordComponent.nextId++}`;
 
   @HostBinding( 'attr.aria-describedby' ) describedBy = '';
   setDescribedByIds( ids: string[] ): void
@@ -58,14 +58,11 @@ export class PasswordComponent implements MatFormFieldControl<string>, OnInit, O
   @Input()
   get exStyle(): string
   {
-    let _exStyle = this._width + ',' + this._padding_left + ',' + this._padding_right; 
-    console.log( 'get exStyle = ', _exStyle );
-    return _exStyle;
+    return this._width + ',' + this._padding_left + ',' + this._padding_right;
   }
   set exStyle( value: string )
   {
     let parts: Array<string> = value.split(',');
-    console.log( 'set exStyle = ', value, parts.length, parts );
     if ( parts.length > 0 )
     {
       this._width = parts[ 0 ];
@@ -90,9 +87,6 @@ export class PasswordComponent implements MatFormFieldControl<string>, OnInit, O
     {
       this._padding_right = '0';
     }
-    console.log( 'set exStyle = ', this._width + ',' + 
-                                   this._padding_left + ',' + 
-                                   this._padding_right );
     return;
   }
   
@@ -211,16 +205,16 @@ export class PasswordComponent implements MatFormFieldControl<string>, OnInit, O
 
   get empty(): boolean
   {
-    const {value: {password}} = this.parts;
+    const { value: { password } } = this.parts;
 
     return !password;
   }
 
   public onContainerClick(event: MouseEvent): void 
   {
-    if ( ( event.target as Element).tagName.toLowerCase() !== 'input' ) 
+    if ( ( event.target as Element).tagName.toLowerCase() !== 'input' )
     {
-      this.elRef.nativeElement.querySelector('input').focus();
+      this.elRef.nativeElement.querySelector( 'input' ).focus();
     }
     return;
   } 

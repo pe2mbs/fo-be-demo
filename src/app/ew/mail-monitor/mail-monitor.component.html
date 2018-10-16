@@ -1,33 +1,25 @@
-<p>
-  mail-monitor works!
-</p>
-<br/>
-<div class="full-width" [formGroup]="test">
-  <!--
-  <mat-form-field class="full-width">
-    <app-us-phone placeholder="Phone number" 
-                  formControlName="phone"
-                  required></app-us-phone>
-    <mat-icon matSuffix>phone</mat-icon>
-    <mat-hint>Include area code</mat-hint>
-  </mat-form-field>
-  -->
-  <mat-ex-password  placeholder="Current password" 
-                    hint="Type your current password"
-                    formControlName="oldPassword"
-                    required 
-                    exStyle="32%, 0, 1%"></mat-ex-password>
+<div class="monitor-view">
+  <p>mail-monitor works!</p>
 
-  <mat-ex-password  placeholder="Password" 
-                    hint="Type your password, use mixed charaters"
-                    formControlName="newPassword"
-                    required 
-                    exStyle="32%, 1%, 1%"></mat-ex-password>
-  
-  <mat-ex-password  placeholder="Re-type password" 
-                    hint="Re-type your password, the same as Password"
-                    formControlName="retypePassword"
-                    required 
-                    exStyle="32%, 1%"></mat-ex-password>
-  
+  <mat-card class="mail-card" *ngFor="let msg of messages">
+      <mat-card-header>
+        <div mat-card-avatar [ngClass]="msg.logo"></div>
+        <div>
+          <mat-card-title>{{ msg.sender }}</mat-card-title>
+          <mat-card-subtitle>{{ msg.subject }}</mat-card-subtitle>
+        </div>
+        <span class="filler"></span>
+        <div>
+          {{ msg.status }}
+          <br/>
+          Number of tests: {{ msg.numberOfTests }}
+        </div>
+        <div>
+          <button mat-button>Send</button>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+          {{ msg.message }}
+      </mat-card-content>
+    </mat-card>
 </div>

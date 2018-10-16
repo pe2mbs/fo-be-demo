@@ -13,19 +13,14 @@ export class AuthInterceptorService
     return;
   }
 
-  intercept( req: HttpRequest<any>, 
-              next: HttpHandler): Observable<HttpEvent<any>> {
-      console.log( 'intercept.req ', req );
-      console.log( 'intercept.next ', next );
-      if ( !req.url.endsWith( '/auth' ) )
-      {
-        const clonedRequest = req.clone( {
-          headers: req.headers.set(
-              'Authorization', 'JWT ' + this.authService.getToken() )
-        } );
-        console.log( 'new headers', clonedRequest.headers.keys() );
-        return next.handle( clonedRequest );
-      }
-      return next.handle( req );
+  intercept( req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> 
+  {
+    if ( !req.url.endsWith( '/login' ) )
+    {
+      const token = 'Token ' + this.authService.getToken();
+      const obj = { setHeaders: { Authorization: token } };
+      return next.handle( req.clone( obj ) );
+    }
+    return next.handle( req );
   }
 }

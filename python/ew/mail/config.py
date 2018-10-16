@@ -3,7 +3,7 @@ import requests.exceptions
 import json
 from flask import Blueprint, request
 
-blueprintApi = Blueprint( 'auth', __name__ )
+blueprintApi = Blueprint( 'mail', __name__ )
 
 
 def registerApi( app, cors ):

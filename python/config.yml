@@ -14,6 +14,7 @@ COMMON: &common
   JWT_AUTH_USERNAME_KEY:          email
   JWT_AUTH_HEADER_PREFIX:         Token
   JWT_HEADER_TYPE:                Token
+  JWT_SECRET_KEY:                 super-secret
   ALLOW_CORS_ORIGIN:              false
   CORS_ORIGIN_WHITELIST:          [
     'http://0.0.0.0:5000',

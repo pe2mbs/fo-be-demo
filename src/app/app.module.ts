@@ -19,11 +19,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCheckboxModule, MatInputModule, MatCardModule, MatSlideToggleModule } from '@angular/material';
-
 import { AppComponent } from './app.component';
 import { PagerService } from './services/pager.service';
 import { ContactBackendService } from './services/contact-backend.service';
@@ -43,13 +41,15 @@ import { MailMonitorComponent } from './ew/mail-monitor/mail-monitor.component';
 import { MailConfigComponent } from './ew/mail-monitor/mail-config/mail-config.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MailConfigService } from './ew/mail-monitor/mail-config/mail-config.service';
-import { PasswordComponent } from './components/password/password.component';
-import { UsPhoneComponent } from './components/us-phone/us-phone.component';
+import { MatExPasswordComponent } from './components/password/password.component';
+import { MatExPhoneComponent } from './components/phone/phone.component';
+import { LoginComponent } from './components/login/login.component';
 
 const appRoutes: Routes = [
   { path: 'example-table', component: TableSelectionExampleComponent },
   { path: 'mail-monitor', component: MailMonitorComponent },
   { path: 'mail-config', component: MailConfigComponent },
+  { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '/' }
 ];
 
@@ -59,8 +59,9 @@ const appRoutes: Routes = [
     TableSelectionExampleComponent,
     MailMonitorComponent,
     MailConfigComponent,
-    PasswordComponent,
-    UsPhoneComponent,
+    MatExPasswordComponent,
+    MatExPhoneComponent,
+    LoginComponent,
   ],
   imports: [
     RouterModule.forRoot(

@@ -7,3 +7,39 @@
 {
     width: 50%;
 }
+
+.monitor-view
+{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.header-image-ing 
+{
+    background-image: url('/assets/img/rond-ing-logo.png');
+    background-size: cover;
+}
+
+.header-image-rabo
+{
+    background-image: url('/assets/img/rond-rabobank-logo.png');
+    background-size: cover;
+}
+
+.header-image-abnamro
+{
+    background-image: url('/assets/img/rond-abnamro-logo.png');
+    background-size: cover;
+}
+
+
+.mail-card
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.filler
+{
+    flex: 1;
+}

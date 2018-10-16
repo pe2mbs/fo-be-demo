@@ -1,6 +1,2 @@
-import ew.mail.config
+from ew.mail.config import registerApi
 
-
-def registerApi( app, cors ):
-    ew.mail.config.registerApi( app, cors )
-    return

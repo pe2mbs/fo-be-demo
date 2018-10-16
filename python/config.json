@@ -16,6 +16,7 @@
     "JWT_AUTH_HEADER_PREFIX":         "Token",
     "JWT_HEADER_TYPE":                "Token",
     "JWT_EXPIRATION_DELTA":           "weeks=52",
+    "JWT_SECRET_KEY":                 "super-secret",
     "ALLOW_CORS_ORIGIN":              false,
     "CORS_ORIGIN_WHITELIST": [
       "http://127.0.0.1:4000",

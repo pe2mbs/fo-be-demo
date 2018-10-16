@@ -1,7 +1,9 @@
 import ew.mail
+import ew.auth
 
 def registerApi( app, cors ):
     ew.mail.registerApi( app, cors )
+    ew.auth.registerApi( app, cors )
     return
 
 def registerExtensions( app, db ):

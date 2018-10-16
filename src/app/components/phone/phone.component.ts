@@ -6,36 +6,45 @@ import { Subject } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 
 /** Data structure for holding telephone number. */
-export class UsPhone
+export class PhoneNumber
 {
   constructor( public area: string, 
                public exchange: string, 
-               public subscriber: string ) {}
+               public subscriber: string ) 
+  {
+    return;
+  }
 }
 
 @Component({
-  selector: 'app-us-phone',
-  templateUrl: './us-phone.component.html',
-  styleUrls: ['./us-phone.component.scss'],
-  providers: [{provide: MatFormFieldControl, useExisting: UsPhoneComponent}],
+  // tslint:disable-next-line:component-selector
+  selector: 'mat-form-field-ex-phone',
+  templateUrl: './phone.component.html',
+  styleUrls: ['./phone.component.scss'],
+  providers: [{provide: MatFormFieldControl, useExisting: MatExPhoneComponent}],
+  // tslint:disable-next-line:use-host-property-decorator
   host: {
     '[class.floating]': 'shouldLabelFloat',
     '[id]': 'id',
     '[attr.aria-describedby]': 'describedBy',
   }
 })
-export class UsPhoneComponent implements MatFormFieldControl<UsPhone>, OnDestroy  {
+export class MatExPhoneComponent implements MatFormFieldControl<PhoneNumber>, OnDestroy  {
 
-  static nextId = 0;
+  static nextId           = 0;
+  public areaLength       = 4;
+  public exchangeLength   = 2;
+  public subscriberLength = 8;
+  private _countryCode    = 528;
 
   parts: FormGroup;
-  stateChanges = new Subject<void>();
-  focused = false;
-  ngControl = null;
-  errorState = false;
-  controlType = 'app-us-phone';
-  id = `app-us-phone-${UsPhoneComponent.nextId++}`;
-  describedBy = '';
+  stateChanges            = new Subject<void>();
+  focused                 = false;
+  ngControl               = null;
+  errorState              = false;
+  controlType             = 'mat-form-field-ex-phone';
+  id                      = `mat-form-field-ex-phone-${MatExPhoneComponent.nextId++}`;
+  describedBy             = '';
 
   get empty() 
   {
@@ -87,20 +96,20 @@ export class UsPhoneComponent implements MatFormFieldControl<UsPhone>, OnDestroy
   private _disabled = false;
 
   @Input()
-  get value(): UsPhone | null 
+  get value(): PhoneNumber | null 
   {
     const { value: { area, exchange, subscriber } } = this.parts;
     if ( area.length === 3 && 
          exchange.length === 3 && 
          subscriber.length === 4 ) 
     {
-      return new UsPhone( area, exchange, subscriber );
+      return new PhoneNumber( area, exchange, subscriber );
     }
     return null;
   }
-  set value( tel: UsPhone | null ) 
+  set value( tel: PhoneNumber | null ) 
   {
-    const { area, exchange, subscriber } = tel || new UsPhone( '', '', '' );
+    const { area, exchange, subscriber } = tel || new PhoneNumber( '', '', '' );
     this.parts.setValue( { area, exchange, subscriber } );
     this.stateChanges.next();
     return;
@@ -135,6 +144,7 @@ export class UsPhoneComponent implements MatFormFieldControl<UsPhone>, OnDestroy
   onContainerClick(event: MouseEvent) {
     if ((event.target as Element).tagName.toLowerCase() !== 'input') 
     {
+      // tslint:disable-next-line:no-non-null-assertion
       this.elRef.nativeElement.querySelector( 'input' )!.focus();
     }
   }
